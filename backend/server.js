@@ -13,7 +13,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin:"*"
+  origin: "https://self-service-order-prdp1.vercel.app"
 }));
 app.use(express.json());
 app.use(helmet());
