@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
+const DEFAULT_CAFE_ID = "69e0da3fc53d76f3adcf4da8";
+const mongoose = require("mongoose");
 
 router.post("/", async (req, res) => {
   try {
@@ -24,7 +26,11 @@ router.post("/", async (req, res) => {
       return sum + (item.price + extras) * item.qty;
     }, 0);
 
+console.log("🔥 ORDER HIT");
+    console.log("CafeID:", DEFAULT_CAFE_ID);
+
     const newOrder = new Order({
+      cafeId: new mongoose.Types.ObjectId(DEFAULT_CAFE_ID),
       items,
       total,
       tableNumber, // ✅ now valid
@@ -33,10 +39,15 @@ router.post("/", async (req, res) => {
 
     await newOrder.save();
 
+    console.log("Saving Order:", newOrder);
+
     res.json({
       message: "Order placed",
       orderId: newOrder._id,
     });
+
+    
+
   } catch (err) {
     console.error("🔥 ORDER ERROR:", err); // 👈 ADD THIS
     res.status(500).json({ error: err.message });
