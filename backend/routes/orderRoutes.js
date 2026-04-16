@@ -26,9 +26,6 @@ router.post("/", async (req, res) => {
       return sum + (item.price + extras) * item.qty;
     }, 0);
 
-console.log("🔥 ORDER HIT");
-    console.log("CafeID:", DEFAULT_CAFE_ID);
-
     const newOrder = new Order({
       cafeId: new mongoose.Types.ObjectId(DEFAULT_CAFE_ID),
       items,
@@ -38,8 +35,6 @@ console.log("🔥 ORDER HIT");
     });
 
     await newOrder.save();
-
-    console.log("Saving Order:", newOrder);
 
     res.json({
       message: "Order placed",

@@ -12,22 +12,9 @@ const orderRoutes = require("./routes/orderRoutes");
 const app = express();
 
 // Middleware
-// app.use(cors({
-//   origin: "https://self-service-order-prdp1.vercel.app"
-// }));
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://self-service-order-prdp1.vercel.app"
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  }
+  origin: ["https://self-service-order-prdp1.vercel.app","http://localhost:5173"]
+  // origin:"*"
 }));
 app.use(express.json());
 app.use(helmet());
@@ -43,7 +30,6 @@ app.get("/api/orders", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 const startServer = async () => {
   await connectDB();
 
